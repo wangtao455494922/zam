@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.wjt.zam.modules.sys.mapper.RoleMapper">
+ 	<sql id="commonFields">
+ 		id,
+		role,
+		description,
+		resource_ids resourceIdsStr,
+		available
+ 	</sql>
+ 	
+ 	<!-- 根据角色id获取角色列表 -->
+ 	<select id="findRoles" parameterType="list" resultType="Role">
+ 		SELECT
+			<include refid="commonFields"/>
+		FROM
+			sys_role
+		WHERE
+			id IN
+ 		<foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+			#{item}	 		
+ 		</foreach>
+ 	</select>
+ 	
+ 	<!-- 查找全部角色信息 -->
+ 	<select id="findAll" resultType="Role">
+ 		select 
+			<include refid="commonFields"/>
+		from sys_role
+ 	</select>	
+ 
+ </mapper>

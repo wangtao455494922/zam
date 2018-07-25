@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wjt.zam.modules.act.mapper.LeaveMapper">
+	<resultMap id="BaseResultMap" type="Leave">
+		<id column="id" property="id"  />
+		<result column="days" property="days" />
+		<result column="content" property="content"  />
+		<result column="leave_time" property="leaveTime"  />
+		<result column="remark" property="remark" />
+		<result column="userid" property="userid" />
+		<result column="state" property="state" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, days, content, leave_time, remark, userid ,case state when 0 then '初始录入' when 1 then '开始审批' when 2 then '审批完成' end as stateName
+	</sql>
+	
+	<!-- 根据id查询 -->
+	<select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from zam_leave
+		where id = #{id}
+	</select>
+	
+	<!--根据id删除 -->
+	<delete id="delete" parameterType="Leave">
+		delete from zam_leave
+		where id = #{id}
+	</delete>
+	
+	<!-- 新增 -->
+	<insert id="insert" parameterType="Leave" useGeneratedKeys="true" keyColumn="id"><!-- 自增长id信息返回 -->
+		insert into zam_leave (days, content,leave_time, remark, userid,state)
+		values (#{days},
+				#{content},
+				#{leaveTime},
+			    #{remark}, 
+			    #{userid},
+			    #{state}
+		)
+	</insert>
+	
+	<!-- 根据对象查询 -->
+	<select id="findList" parameterType="Leave" resultMap="BaseResultMap">
+		select 
+			<include refid="Base_Column_List"/>
+		from 
+			zam_leave
+		<where>
+			<if test="days!=null">AND days = #{days}</if>
+			<if test="leaveTimeFrom!=null">AND leave_time &gt;= #{leaveTimeFrom}</if>
+			<if test="leaveTimeTo!=null"> AND leave_time &lt;= #{leaveTimeTo}</if>
+		</where>	
+	</select>
+	<!-- 更新 -->
+	<update id="update" parameterType="Leave">
+		update zam_leave
+		<set>
+			<if test="days!=null">days = #{days},</if>
+			<if test="content!=null">content = #{content},</if>
+			<if test="leaveTime!=null">leave_time = #{leaveTime},</if>
+			<if test="remark!=null">remark = #{remark},</if>
+			<if test="userid!=null">userid = #{userid},</if>
+			<if test="state!=null">state = #{state},</if>
+		</set>
+		where id = #{id}
+	</update>
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="arrayList">
+ 		DELETE
+		FROM
+			zam_leave
+		WHERE
+			id in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">  
+	     	#{item}  
+	    </foreach> 
+ 	</delete>
+</mapper>

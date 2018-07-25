@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.wjt.zam.modules.sys.mapper.ResourceMapper">
+ 	<sql id="commonFields">
+ 		t.id,
+		t.name,
+		t.type,
+		t.url,
+		t.parent_id parentId, 
+		t.parent_ids parentIds,
+		t.permission,
+		t.available
+ 	</sql>
+ 	
+ 	<!-- 根据资源id获取资源列表 -->
+ 	<select id="findResources" parameterType="list" resultType="Resource">
+ 		SELECT
+			<include refid="commonFields"/>
+		FROM
+			sys_resource t
+		WHERE
+			t.id IN
+ 		<foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+			#{item}	 		
+ 		</foreach>
+ 	</select>
+ 	
+ 	<!-- 获取一级菜单(权限) -->
+ 	<select id="findFirstMenus" parameterType="arrayList" resultType="Resource">
+ 		SELECT
+			<include refid="commonFields"/>
+		FROM
+			sys_resource t
+		WHERE
+			t.type = 'menu'
+		AND t.parent_id IN (
+			SELECT
+				sss.id
+			FROM
+				sys_resource sss
+			WHERE
+				sss.parent_id = 0
+		)
+		AND t.permission IN 
+		<foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+ 	</select>
+ 	
+ 	<!-- 获取一级菜单(权限) -->
+ 	<select id="findSecondMenus" resultType="Resource">
+ 		SELECT
+			<include refid="commonFields"/>
+		FROM
+			sys_resource t
+		WHERE
+			t.parent_id=#{parentId} 
+		AND t.permission IN	
+		<foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+ 	</select>
+ 	
+ 	<!-- 获取资源信息 -->
+ 	<select id="getResources" parameterType="Resource" resultType="Resource">
+ 		SELECT
+			t.id,
+			t.name,
+			t.type,
+			CASE WHEN t.type='menu' then '菜单' ELSE '按钮' END as typeName,
+			t.url,
+			t.parent_id  parentId,
+			t.available,
+			s.name parentResourceName, 
+			t.permission,
+		    CASE WHEN t.available=1 then '有效' ELSE '无效' END as availableName
+		FROM
+			sys_resource t LEFT JOIN sys_resource s ON t.parent_id=s.id
+		<where>
+			<if test="name!=null and name!=''">AND t.name like CONCAT("%",#{name},"%")</if>
+		</where>	
+ 	</select>
+ 	
+ 	<!-- 根据条件查询 -->
+ 	<select id="findList" parameterType="map" resultType="Resource">
+ 		SELECT
+			t.id,
+			t.name,
+			t.type,
+			t.url,
+			t.parent_id parentId, 
+			t.parent_ids parentIds,
+			t.permission,
+			t.available
+		FROM
+			sys_resource t
+		<where>
+			<if test="type!=null and type!=''">AND t.type=#{type}</if>
+		</where>
+ 	</select>
+ 	
+ 	<!-- 根据条件查询 -->
+ 	<select id="findById" parameterType="string" resultType="Resource">
+ 		SELECT
+			t.id,
+			t.name,
+			t.type,
+			t.url,
+			t.parent_id parentId, 
+			t.parent_ids parentIds,
+			t.permission,
+			t.available
+		FROM
+			sys_resource t
+		where t.id=#{id}
+ 	</select>
+ 	
+ 	<!-- 新增资源信息 -->
+ 	<insert id="insert" parameterType="Resource" useGeneratedKeys="true"  keyColumn="id">
+ 		INSERT INTO sys_resource (
+			NAME,
+			type,
+			url,
+			parent_id,
+			<!-- parent_ids, -->
+			permission,
+			available
+		)
+		VALUE
+			(
+				#{name},	
+				#{type},	
+				#{url},	
+				#{parentId},	
+				<!-- #{parentIds},	 -->
+				#{permission},
+				#{available}	
+			);
+ 	</insert>
+ 	
+ 	<!-- 更新资源信息 -->
+ 	<update id="update" parameterType="Resource">
+		UPDATE 
+			sys_resource t
+		<set>
+			<if test="name!=null and name!=''">t.name =#{name},</if>
+			<if test="type!=null and type!=''">t.type=#{type},</if>
+			<if test="url!=null and url!=''">t.url=#{url},</if>
+			<if test="parentId!=null and parentId!=''">t.parent_id =#{parentId},</if>
+			<if test="parentIds!=null and parentIds!=''">t.parent_ids =#{parentIds},</if>
+			<if test="permission!=null and permission!=''">t.permission =#{permission},</if>
+			<if test="available!=null and available!=''">t.available =#{available},</if>
+		</set>
+		WHERE
+			t.id = #{id}
+ 	</update>
+ 	
+ 	<!-- 删除资源信息 -->
+ 	<delete id="delete" parameterType="Resource">
+ 		DELETE
+		FROM
+			sys_resource
+		WHERE
+			id = #{id}
+ 	</delete>
+ 	
+ 	<delete id="batchDelete" parameterType="arrayList">
+ 		DELETE
+		FROM
+			sys_resource
+		WHERE
+			id in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">  
+	     	#{item}  
+	    </foreach> 
+ 	</delete>
+ 	
+ </mapper>

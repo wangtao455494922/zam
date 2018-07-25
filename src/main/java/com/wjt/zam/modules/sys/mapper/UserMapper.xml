@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.wjt.zam.modules.sys.mapper.UserMapper">
+ 	<!-- 根据用户名称查询用户 -->
+ 	<select id="findByUsername" parameterType="string" resultType="User">
+ 		SELECT
+		    u.id,
+			u.organization_id organizationId,
+			u.username,
+			u.password,
+			u.salt,
+			u.role_ids roleIdsStr,
+			u.locked,
+			u.manager_id
+		FROM
+			sys_user u
+		WHERE
+			u.username = #{username}
+ 	</select>	
+ 	
+ 	<!-- 根据id查询用户信息 -->
+ 	<select id="findById" parameterType="long" resultType="User">
+ 		SELECT
+		    u.id,
+			u.organization_id organizationId,
+			u.username,
+			u.password,
+			u.salt,
+			u.role_ids roleIdsStr,
+			u.locked,
+			u.manager_id managerId
+		FROM
+			sys_user u
+		WHERE
+			u.id = #{id}
+ 	</select>	
+ 	
+ 	<select id="findList" parameterType="User" resultType="User">
+ 		SELECT
+			us.id,
+			us.username,
+			CASE us.locked
+		WHEN 1 THEN
+			'锁住'
+		WHEN 0 THEN
+			'正常'
+		END AS locked,
+		 sy. NAME organizationName,
+		 managerUser.username managerName
+		FROM
+			sys_user us
+		LEFT JOIN sys_organization sy ON us.organization_id = sy.id
+		LEFT JOIN sys_user managerUser ON us.manager_id = managerUser.id
+ 		<where>
+ 			<if test="username!=null and username!=''">
+ 				AND us.username like CONCAT("%",#{username},"%")
+ 			</if>
+ 		</where>
+ 	</select>
+ 	
+ 	<!-- 新增 -->
+ 	<insert id="insert" parameterType="User">
+ 		insert into sys_user(username,password,salt,role_ids) values(#{username},#{password},#{salt},#{roleIdsStr});
+ 	</insert>
+ 	
+ 	<!-- 删除信息 -->
+ 	<delete id="delete" parameterType="User">
+ 		DELETE
+		FROM
+			sys_user
+		WHERE
+			id = #{id}
+ 	</delete>
+ 	
+ 	<!-- 批量删除信息 -->
+ 	<delete id="batchDelete" parameterType="arrayList">
+ 		DELETE
+		FROM
+			sys_user
+		WHERE
+			id in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">  
+	     	#{item}  
+	    </foreach> 
+ 	</delete>
+ </mapper>
