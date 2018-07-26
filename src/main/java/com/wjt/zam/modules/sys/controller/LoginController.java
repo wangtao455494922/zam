@@ -31,7 +31,9 @@ public class LoginController extends BaseController<String>{
 	 */
 	@GetMapping("/login")
 	public String login() {
-		if (SecurityUtils.getSubject().isAuthenticated()) {
+		boolean login = SecurityUtils.getSubject().isAuthenticated();
+		boolean rememeber = SecurityUtils.getSubject().isRemembered();
+		if (login||rememeber) {
 			return "redirect:/index";
 		}
 		return "login";
@@ -42,10 +44,10 @@ public class LoginController extends BaseController<String>{
 	 */
 	@PostMapping("/login")
 	@ResponseBody
-	public Object login(String username, String password, Model model) {
+	public Object login(String username, String password,Boolean rememberMe, Model model) {
 		try {
 			Subject subject = SecurityUtils.getSubject();
-			UsernamePasswordToken token = new UsernamePasswordToken(username, password, true);
+			UsernamePasswordToken token = new UsernamePasswordToken(username, password,rememberMe);
 			subject.login(token);
 			return renderSuccess("登录成功");
 		} catch (LockedAccountException e) {

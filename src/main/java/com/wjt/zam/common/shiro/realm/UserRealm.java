@@ -1,7 +1,5 @@
 package com.wjt.zam.common.shiro.realm;
 
-
-import java.util.List;
 import java.util.Set;
 
 import org.apache.shiro.authc.*;
@@ -12,10 +10,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.wjt.zam.modules.sys.model.Resource;
-import com.wjt.zam.modules.sys.model.ShiroUser;
 import com.wjt.zam.modules.sys.model.User;
-import com.wjt.zam.modules.sys.service.ResourceService;
 import com.wjt.zam.modules.sys.service.UserService;
 
 
@@ -28,16 +23,17 @@ public class UserRealm extends AuthorizingRealm {
 
     @Autowired
     private UserService userService;
-    @Autowired
-    private ResourceService  resourceService;
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-    	ShiroUser shiroUser = (ShiroUser)principals.getPrimaryPrincipal();
-
+    	String username = (String)principals.getPrimaryPrincipal();
+    	
+    	Set<String> roles = userService.findRoles(username);
+        Set<String> permissions = userService.findPermissions(username);
+    	
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-        authorizationInfo.setRoles(shiroUser.getRoles());
-        authorizationInfo.setStringPermissions(shiroUser.getPermissions());
+        authorizationInfo.setRoles(roles);
+        authorizationInfo.setStringPermissions(permissions);
         return authorizationInfo;
     }
 
@@ -53,12 +49,8 @@ public class UserRealm extends AuthorizingRealm {
             throw new LockedAccountException(); //帐号锁定
         }
         //交给AuthenticatingRealm使用CredentialsMatcher进行密码匹配，如果觉得人家的不好可以自定义实现
-        Set<String> roles = userService.findRoles(username);
-        Set<String> permissions = userService.findPermissions(username);
-        List<Resource> resources = resourceService.findMenus(permissions);
-		ShiroUser shiroUser = new ShiroUser(user, roles, permissions, resources);
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
-        		shiroUser, //shiro缓存用户信息,在原有的username上加以修改
+        		user.getUsername(), //shiro缓存用户信息,在原有的username上加以修改
                 user.getPassword(), //密码
                 ByteSource.Util.bytes(user.getCredentialsSalt()),//salt=username+salt
                 getName()  //realm name

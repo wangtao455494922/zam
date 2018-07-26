@@ -54,7 +54,7 @@ public class TaskController extends BaseController<com.wjt.zam.modules.act.model
 		List<com.wjt.zam.modules.act.model.Task> list = new ArrayList<>();
 		PageHelper.startPage(task.getPageNum(),task.getPageSize());
 		//查询部署对象信息，对应表（act_re_deployment）
-		List<Task> actTasks = taskService.getTasksByAssignee(ShiroUtils.getCurrentUser().getUser().getUsername(),task.getName());
+		List<Task> actTasks = taskService.getTasksByAssignee(ShiroUtils.getUsername(),task.getName());
 		ConvertUtils.actObjectToZamObject(com.wjt.zam.modules.act.model.Task.class,list,actTasks);
 		return layuiTableRender(list);
 	}

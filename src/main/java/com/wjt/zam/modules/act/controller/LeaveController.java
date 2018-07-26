@@ -20,6 +20,7 @@ import com.wjt.zam.common.base.BaseController;
 import com.wjt.zam.common.utils.ShiroUtils;
 import com.wjt.zam.modules.act.model.Leave;
 import com.wjt.zam.modules.act.service.ILeaveService;
+import com.wjt.zam.modules.sys.service.UserService;
 /**  
 
 * <p>Description: 请假管理    控制层</p>  
@@ -33,6 +34,8 @@ public class LeaveController extends BaseController<Leave> {
 	
 	@Autowired
 	private ILeaveService leaveService;
+	@Autowired
+	private UserService userService;
 
 	/**
 	 * 跳转到请假管理首页
@@ -71,7 +74,7 @@ public class LeaveController extends BaseController<Leave> {
 	@PostMapping("/save")
 	@ResponseBody
 	public Object resourceSave(Leave leave){
-		leave.setUserid(ShiroUtils.getCurrentUser().getUser().getId());
+		leave.setUserid(userService.findByUsername(ShiroUtils.getUsername()).getId());
 		int i = leaveService.insert(leave);
 		if (i==1) {
 			return renderSuccess(Constant.INSERT_SUCCESS);

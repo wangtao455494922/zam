@@ -34,7 +34,7 @@
     <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
         <constructor-arg value="sid"/>
         <property name="httpOnly" value="true"/>
-        <property name="maxAge" value="-1"/>
+        <property name="maxAge" value="-1"/><!-- maxAge=-1表示浏览器关闭时失效此Cookie -->
     </bean>
 
     <bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
@@ -87,14 +87,14 @@
         <property name="staticMethod" value="org.apache.shiro.SecurityUtils.setSecurityManager"/>
         <property name="arguments" ref="securityManager"/>
     </bean>
-
+    <!-- 记住我功能过滤器  -->
+    <bean id="rememberAuthFilter" class="com.wjt.zam.common.shiro.filter.RememberAuthenticationFilter"/>
     <!-- Shiro的Web过滤器 -->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
         <property name="loginUrl" value="/login"/><!-- 默认的登陆访问url -->
         <property name="filterChainDefinitions">
             <value>
-                /login = authc
                 /logout = logout
                 /authenticated = authc
                 /js/**=anon
@@ -103,9 +103,8 @@
                 /images/**=anon
                 /plugins/**=anon
                 /jsp/**=anon
-                /login.jsp=anon
-                /login=anon
-                /** = user
+               <!--/** = user --><!-- 再没有启用RememberMe功能时取消该注释 -->
+               /** = rememberAuthFilter<!-- 启用RememberMe功能时开启 -->
             </value>
         </property>
     </bean>

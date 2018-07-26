@@ -16,6 +16,8 @@
             <hr class="hr15">
             <input name="password" lay-verify="required" placeholder="密码"  type="password" class="layui-input">
             <hr class="hr15">
+		    <input type="checkbox" name="rememberMe" lay-skin="primary" title="记住我">
+		    <hr class="hr15">
             <input value="登录" lay-submit lay-filter="login" style="width:100%;" type="submit">
             <hr class="hr20" >
         </form>
@@ -30,11 +32,12 @@
 			layui.use('form', function() {
 				var form = layui.form;
 				//监听提交
-				form.on('submit(login)', function(data) {
-					$.ajax({
+				 form.on('submit(login)', function(data) {
+					 $.ajax({
 						data : {
 							'username' : data.field.username,
-							'password' : data.field.password
+							'password' : data.field.password,
+							'rememberMe':$("input:checked").length==0?false:true
 						},
 						dataType:"json",
 						type : 'post',
@@ -47,8 +50,8 @@
 							}
 						}
 					});
-					return false;
-				});
+					return false; 
+				}); 
 			});
 		})
 	</script></html>

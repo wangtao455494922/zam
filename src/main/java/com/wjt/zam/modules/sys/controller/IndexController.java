@@ -1,12 +1,18 @@
 package com.wjt.zam.modules.sys.controller;
 
+import java.util.List;
+import java.util.Set;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.wjt.zam.modules.sys.model.ShiroUser;
+import com.wjt.zam.modules.sys.model.Resource;
+import com.wjt.zam.modules.sys.service.ResourceService;
+import com.wjt.zam.modules.sys.service.UserService;
 
 /**  
 
@@ -17,21 +23,25 @@ import com.wjt.zam.modules.sys.model.ShiroUser;
 */ 
 @Controller
 public class IndexController {
+	 @Autowired
+	 private UserService userService;
+	 @Autowired
+	 private ResourceService  resourceService;
+
+	    
 	
 	/**  
 	 * 首页 
 	 */
 	@GetMapping("/index")
     public String index(Model model) {
-		Subject subject = SecurityUtils.getSubject();
-		if (subject.isAuthenticated()) {
-			ShiroUser shiroUser = (ShiroUser)subject.getPrincipal();
-			model.addAttribute("menus", shiroUser.getResources());
-			model.addAttribute("username", shiroUser.getUser().getUsername());
-			return "index";
-		} else {
-			return "login";
-		}
+		String username = (String)SecurityUtils.getSubject().getPrincipal();
+		Set<String> permissions = userService.findPermissions(username);
+	    List<Resource> resources = resourceService.findMenus(permissions);
+	        
+		model.addAttribute("menus", resources);
+		model.addAttribute("username", username);
+		return "index";
     }
 	/**  
 	 * 首页 

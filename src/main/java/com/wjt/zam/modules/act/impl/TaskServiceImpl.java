@@ -145,7 +145,7 @@ public class TaskServiceImpl implements ITaskService {
 		 * 所有需要从Session中获取当前登录人，作为该任务的办理人（审核人），对应act_hi_comment表中的User_ID的字段，不过不添加审核人，该字段为null
 		 * 所以要求，添加配置执行使用Authentication.setAuthenticatedUserId();添加当前任务的审核人
 		 */
-		Authentication.setAuthenticatedUserId(ShiroUtils.getCurrentUser().getUser().getUsername());
+		Authentication.setAuthenticatedUserId(ShiroUtils.getUsername());
 		taskService.addComment(taskId, processInstanceId, message);
 		/**
 		 * 2：如果连线的名称是“默认提交”，那么就不需要设置，如果不是，就需要设置流程变量 在完成任务之前，设置流程变量，按照连线的名称，去完成任务

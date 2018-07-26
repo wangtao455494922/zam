@@ -50,7 +50,7 @@ public class LeaveServiceImpl extends BaseServiceImpl<Leave, Long> implements IL
 		
 		//启动流程
 		Map<String, Object> variables = new HashMap<>();
-		variables.put("currentUser", ShiroUtils.getCurrentUser().getUser().getUsername());
+		variables.put("currentUser", ShiroUtils.getUsername());
 		
 		String processDefinitionKey = leave.getClass().getSimpleName();
 		String businessKey = processDefinitionKey+"."+id;
