@@ -12,6 +12,7 @@
         <div class="message">wjt-admin2.0-管理登录</div>
         <div id="darkbannerwrap"></div>
         <form method="post" class="layui-form" >
+       		<c:if test="${not empty param.kickout}">您被踢出登录</c:if>
             <input name="username" lay-verify="required" placeholder="用户名"  type="text" class="layui-input" >
             <hr class="hr15">
             <input name="password" lay-verify="required" placeholder="密码"  type="password" class="layui-input">

@@ -39,15 +39,16 @@ public class UserRealm extends AuthorizingRealm {
 
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-
         String username = (String)token.getPrincipal();
         User user = userService.findByUsername(username);
+        
         if(user == null) {
             throw new UnknownAccountException();//没找到帐号
         }
         if(Boolean.TRUE.equals(user.getLocked())) {
             throw new LockedAccountException(); //帐号锁定
         }
+        
         //交给AuthenticatingRealm使用CredentialsMatcher进行密码匹配，如果觉得人家的不好可以自定义实现
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(
         		user.getUsername(), //shiro缓存用户信息,在原有的username上加以修改

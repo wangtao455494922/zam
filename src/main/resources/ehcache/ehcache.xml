@@ -39,5 +39,15 @@
            overflowToDisk="false"
            statistics="true">
     </cache>
+    
+    <!-- 一个用户不能多地点登陆 -->
+    <cache name="shiro-kickout-session"
+           maxEntriesLocalHeap="2000"
+           eternal="false"
+           timeToIdleSeconds="3600"
+           timeToLiveSeconds="0"
+           overflowToDisk="false"
+           statistics="true">
+    </cache>
 
 </ehcache>

@@ -89,10 +89,27 @@
     </bean>
     <!-- 记住我功能过滤器  -->
     <bean id="rememberAuthFilter" class="com.wjt.zam.common.shiro.filter.RememberAuthenticationFilter"/>
+    
+    <!-- 并发人数控制 -->
+    <bean id="kickoutSessionControlFilter" class="com.wjt.zam.common.shiro.filter.KickoutSessionControlFilter">
+        <property name="cacheManager" ref="cacheManager"/>
+        <property name="sessionManager" ref="sessionManager"/>
+
+        <property name="kickoutAfter" value="false"/>
+        <property name="maxSession" value="1"/>
+        <property name="kickoutUrl" value="/login?kickout=1"/>
+    </bean>
+    
     <!-- Shiro的Web过滤器 -->
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
         <property name="loginUrl" value="/login"/><!-- 默认的登陆访问url -->
+        <property name="filters">
+            <util:map>
+                <entry key="rememberMe" value-ref="rememberAuthFilter"/>
+                <entry key="kickout" value-ref="kickoutSessionControlFilter"/>
+            </util:map>
+        </property>
         <property name="filterChainDefinitions">
             <value>
                 /logout = logout
@@ -104,7 +121,7 @@
                 /plugins/**=anon
                 /jsp/**=anon
                <!--/** = user --><!-- 再没有启用RememberMe功能时取消该注释 -->
-               /** = rememberAuthFilter<!-- 启用RememberMe功能时开启 -->
+               /** = user,rememberMe,kickout<!-- 启用RememberMe功能时开启 ,并发人数控制-->
             </value>
         </property>
     </bean>

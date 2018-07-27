@@ -1,5 +1,6 @@
 package com.wjt.zam.modules.sys.controller;
 
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.ExpiredCredentialsException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -26,6 +27,7 @@ import com.wjt.zam.common.base.BaseController;
  */
 @Controller
 public class LoginController extends BaseController<String>{
+	
 	/**  
 	 * 系统默认登录页面(get)
 	 */
@@ -58,9 +60,7 @@ public class LoginController extends BaseController<String>{
 			return renderError("帐号过期");
 		} catch (IncorrectCredentialsException e) {
 			return renderError("用户名/密码错误");
-		} catch (NullPointerException e) {
-			return renderError("空指针异常");
-		}
+		} 
 	}
 
 	/**  
