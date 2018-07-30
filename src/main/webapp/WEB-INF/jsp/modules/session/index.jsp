@@ -12,9 +12,9 @@
 			<span class="layui-breadcrumb" style="visibility: visible;"> 
 				<a href="">首页</a> 
 				<span lay-separator="">/</span>
-				<a href="">工作流管理</a> 
+				<a href="">系统监控</a> 
 				<span lay-separator="">/</span>
-				<a> <cite>任务管理</cite></a>
+				<a> <cite>会话管理</cite></a>
 			</span>
 		</div>
 	</div>
@@ -22,33 +22,35 @@
 	<div class="x-body">
 		 <div class="resourceTable demoTableClass">
 		  <div class="layui-inline">
-		    <input class="layui-input" name="name" id="name" autocomplete="off" placeholder="请输入任务名称">
+		    <input class="layui-input" name="name" id="name" autocomplete="off" placeholder="请输入用户名">
 		  </div>
 		  <button class="layui-btn" data-type="tableReload">搜索</button>
 		</div>
-		<table id="taskTab" class="layui-table" lay-filter="taskTable"></table>
+		<table id="sessionTab" class="layui-table" lay-filter="sessionTable"></table>
 		<script type="text/html" id="barDemo">
-   			 <button class="layui-btn layui-btn-sm" lay-event="handle">办理任务</button>
-			 <button class="layui-btn layui-btn-sm" lay-event="approve">审批记录</button>
-			 <button class="layui-btn layui-btn-sm" lay-event="search">查流程图</button>
+			 {{#  if(d.forceLogout == '否'){ }}	
+   			 	<button class="layui-btn layui-btn-sm" lay-event="forceLogout">强制退出</button>
+			 {{#  } }}
 		</script>
 	</div>
 	<script>
-		layui.use(['table' ], function() {
+		layui.use(['table','layer' ], function() {
 			var table = layui.table;
+			var layer = layui.layer;
 			//table渲染
 			table.render({
-				elem: '#taskTab'
-			    ,url: '${path}/task/tableRender' //数据接口
+				elem: '#sessionTab'
+			    ,url: '${path}/session/tableRender' //数据接口
 			    ,request: {pageName: 'pageNum' ,limitName: 'pageSize'}
 			    ,method:'post'
 			    ,page: true //开启分页
 			    ,cols: [[ //表头
 			       {type:'checkbox'}
-			      ,{field:'id', sort: true,title: 'ID'}
-			      ,{field:'name',width:138,title: '任务名称'}
-			      ,{field:'createTime', sort: true,title: '发布时间',templet:'<div>{{ layui.laytpl.toDateString(d.createTime) }}</div>'} 
-			      ,{field:'assignee',width:138,title: '办理人'}
+			      ,{field:'id', sort: true,title: '会话ID'}
+			      ,{field:'name',width:138,title: '用户名'}
+			      ,{field:'host',title: '主机地址'} 
+			      ,{field:'lastAccessTime', sort: true,title: '最后访问时间',templet:'<div>{{ layui.laytpl.toDateString(d.lastAccessTime) }}</div>'} 
+			      ,{field:'forceLogout',width:138,title: '是否强制退出'}
 			      ,{fixed: 'right', align:'center', toolbar: '#barDemo',title: '操作'}
 			    ]]
 			});
@@ -80,14 +82,24 @@
 				return num < Math.pow(10, length) ? str + (num | 0) : num;
 			};
 			//监听工具条
-			table.on('tool(taskTable)', function(obj) {
+			table.on('tool(sessionTable)', function(obj) {
 				var data = obj.data;
-				if (obj.event === 'handle') {
-					x_admin_show('办理任务','${path}/task/handle?taskId='+data.id,600,400);
-				}else if(obj.event === 'search'){
-					x_admin_show('查流程图','${path}/task/search?taskId='+data.id);
-				}else if(obj.event === 'approve'){
-					x_admin_show('审批记录 ','${path}/task/approve?taskId='+data.id);
+				if (obj.event === 'forceLogout') {
+					  $.ajax({
+			        		 data:{"id":data.id},
+			        		 type:'POST',
+			        		 url:"${path}/session/forceLogout",
+			        		 dataType:'json',
+			        		 success:function(mes){
+			        			if (mes.success) {
+							        layer.msg(mes.msg,{icon:1,time:1000});
+								}else{
+								    layer.msg(mes.msg, {icon: 5,time:1000});    
+								}
+			        			table.reload('sessionTab');
+			        		 }
+			        	 }); 
+			         return false;  
 				}
 			});
 
@@ -96,7 +108,7 @@
     			tableReload : function() {
 					var name = $('#name');
 					//执行重载
-					table.reload('taskTab', {
+					table.reload('sessionTab', {
 						where : {
 							name : name.val()
 						}

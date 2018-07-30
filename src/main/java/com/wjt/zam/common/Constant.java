@@ -43,6 +43,10 @@ public class Constant {
 	 * 请假状态--审批完成
 	 */
 	public static final Integer LEAVE_STATE_TWO = 2;
+	/**
+	 * shiro 会话管理是否被强制退出标识
+	 */
+	public static final Object SESSION_FORCE_LOGOUT_KEY = "session.force.logout";;
 
 	/**
 	 * 资源菜单名称
@@ -113,6 +117,10 @@ public class Constant {
 	 * 默认outcome
 	 */
 	public static final String DEFAULT_OUTCOME = getProperty("default.outcome");
+	/**
+	 * shiro 强制退出
+	 */
+	public static final String FORCE_LOGOUT_SUCCESS = getProperty("force.logout.success");
 
 	public static Map<String, String> getResourceType() {
 		Map<String, String> map = new HashMap<String, String>();
