@@ -1,3 +1,5 @@
 # zam  是我妻子名称的简写也是我的第一个开源项目
-项目进度
-     20180730 ssm+maven+activiti+shiro整合完毕;
+#### 项目架构
+ssm+maven+shiro+activiti,其他的还会陆续更新
+#### 项目进度
+- 20180730  shiro在线会话管理整合完成
