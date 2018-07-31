@@ -12,5 +12,4 @@
         <property name="configLocation" value="classpath:ehcache/ehcache.xml"/>
     </bean>
 
-
 </beans>

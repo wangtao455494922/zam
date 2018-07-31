@@ -14,49 +14,48 @@ import com.wjt.zam.modules.sys.model.Resource;
 import com.wjt.zam.modules.sys.service.ResourceService;
 import com.wjt.zam.modules.sys.service.UserService;
 
-/**  
-
-* <p>Description:首页--控制器 </p>  
-* @author wjt  
-* @date 2018年6月27日  
-
-*/ 
+/**
+ * <p>Description:首页--控制器 </p>
+ *
+ * @author wjt
+ * @date 2018年6月27日
+ */
 @Controller
 public class IndexController {
-	 @Autowired
-	 private UserService userService;
-	 @Autowired
-	 private ResourceService  resourceService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private ResourceService resourceService;
 
-	    
-	
-	/**  
-	 * 首页 
-	 */
-	@GetMapping("/index")
+
+    /**
+     * 首页
+     */
+    @GetMapping("/index")
     public String index(Model model) {
-		String username = (String)SecurityUtils.getSubject().getPrincipal();
-		Set<String> permissions = userService.findPermissions(username);
-	    List<Resource> resources = resourceService.findMenus(permissions);
-	        
-		model.addAttribute("menus", resources);
-		model.addAttribute("username", username);
-		return "index";
+        String username = (String) SecurityUtils.getSubject().getPrincipal();
+        Set<String> permissions = userService.findPermissions(username);
+        List<Resource> resources = resourceService.findMenus(permissions);
+
+        model.addAttribute("menus", resources);
+        model.addAttribute("username", username);
+        return "index";
     }
-	/**  
-	 * 首页 
-	 */
-	@GetMapping("/")
+
+    /**
+     * 首页
+     */
+    @GetMapping("/")
     public String index() {
         return "redirect:/index";
     }
-	
-	/**  
-	 * 欢迎界面 
-	 */
-	@GetMapping("/welcome")
-	public String welcome(){
-		return "welcome";
-	}
-	
+
+    /**
+     * 欢迎界面
+     */
+    @GetMapping("/welcome")
+    public String welcome() {
+        return "welcome";
+    }
+
 }
