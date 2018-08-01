@@ -249,5 +249,14 @@
 				</configuration>
 			</plugin>
 		</plugins>
+	   <!--解决IDEA环境下不编译Mybatis下的xml文件-->
+       <!--  <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+        </resources> -->
 	</build>
 </project>

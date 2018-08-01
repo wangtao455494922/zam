@@ -27,7 +27,7 @@
 		<div class="layui-btn-container">
 			<button class="layui-btn" data-type="batchDelete">批量删除</button>
 			<button class="layui-btn"
-				onclick="x_admin_show('添加用户信息','${path}/user/add',600,400)">添加</button>
+				onclick="x_admin_show('添加用户信息','${path}/user/add')">添加</button>
 		</div>
 		<table id="layuiTab" class="layui-table" lay-filter="layuiTable"></table>
 		<script type="text/html" id="barDemo">
@@ -49,7 +49,7 @@
 				       {type:'checkbox'}
 				      ,{field:'id', sort: true,title: 'ID'}
 				      ,{field:'username',width:138,sort: true,title: '用户名称'}
-				      ,{field:'organizationName', title: '所属机构'}
+				      /* ,{field:'organizationName', title: '所属机构'} */
 				      /* ,{field:'roleName',title: '角色名称 '} */
 				      ,{field:'managerName', title: '上级领导'}
 				      ,{field:'locked',title: '状态'}
@@ -61,7 +61,7 @@
 			  table.on('tool(layuiTable)', function(obj){
 			    var data = obj.data;
 			    if(obj.event === 'edit'){
-			    	x_admin_show('修改资源','${path}/user/toUpdate?id='+data.id,600,400);
+			    	x_admin_show('修改资源','${path}/user/toUpdate?id='+data.id);
 			    } else if(obj.event === 'delete'){
 				      layer.confirm('真的删除行么', function(index){
 				    	  $.ajax({

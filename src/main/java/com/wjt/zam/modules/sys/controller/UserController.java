@@ -50,9 +50,17 @@ public class UserController extends BaseController<User> {
 	 */
 	@GetMapping("/add")
 	public String resourceAdd(Model model){
-		List<Role> roles = roleService.findAll();
-		model.addAttribute("roles", roles);
+		commonModelAttributes(model);
 		return "/modules/user/add";
+	}
+
+	private void commonModelAttributes(Model model) {
+		//全部角色
+		List<Role> roles = roleService.findAll();
+		//全部用户
+		List<User> users= userService.findAll();
+		model.addAttribute("roles", roles);
+		model.addAttribute("users", users);
 	}
 	
 	/**  
@@ -99,28 +107,30 @@ public class UserController extends BaseController<User> {
 	}
 	
 	/**   
-	 * 跳转到编辑资源页面  
-	 *//*
+	 * 跳转到编辑页面  
+	 */
 	@GetMapping("/toUpdate")
 	public String toUpdate(Long id,Model model){
-		Leave leave = leaveService.findById(id);
-		model.addAttribute("leave", leave);
-		return "/modules/leave/update";
-	}*/
+		commonModelAttributes(model);
+		User user = userService.findById(id);
+		model.addAttribute("user", user);
+		return "/modules/user/update";
+	}
 	
 	/**  
 	 * 更新
-	 *//*
+	 */
 	@PostMapping("/update")
 	@ResponseBody
-	public Object resourceUpdate(Leave Leave){
-		int i = leaveService.update(Leave);
+	public Object resourceUpdate(User user){
+		PasswordHelper.encryptPassword(user);//加密
+		int i = userService.update(user);
 		if (i==1) {
 			return renderSuccess(Constant.UPDATE_SUCCESS);
 		} else {
 			return renderError(Constant.UPDATE_ERROR);
 		}
-	}*/
+	}
 	
 
 }

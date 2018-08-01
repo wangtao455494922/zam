@@ -47,7 +47,7 @@
 			'正常'
 		END AS locked,
 		 sy. NAME organizationName,
-		 managerUser.username managerName
+		IFNULL(managerUser.username,'无(系统最高用户)') managerName
 		FROM
 			sys_user us
 		LEFT JOIN sys_organization sy ON us.organization_id = sy.id
@@ -61,7 +61,7 @@
  	
  	<!-- 新增 -->
  	<insert id="insert" parameterType="User">
- 		insert into sys_user(username,password,salt,role_ids) values(#{username},#{password},#{salt},#{roleIdsStr});
+ 		insert into sys_user(username,password,salt,role_ids,manager_id) values(#{username},#{password},#{salt},#{roleIdsStr},#{managerId});
  	</insert>
  	
  	<!-- 删除信息 -->
@@ -84,4 +84,28 @@
 	     	#{item}  
 	    </foreach> 
  	</delete>
+ 	
+ 	<!-- 查找全部用户 -->
+ 	<select id="findAll" resultType="User">
+ 		SELECT
+		    id,
+			username
+		FROM
+			sys_user
+ 	</select>
+ 	
+ 	<!-- 更新用户信息 -->
+ 	<update id="update" parameterType="User">
+ 		UPDATE 
+			sys_user t
+		<set>
+			<if test="username!=null and username!=''">t.username =#{username},</if>
+			<if test="password!=null and password!=''">t.password=#{password},</if>
+			<if test="salt!=null and salt!=''">t.salt=#{salt},</if>
+			<if test="managerId!=null and managerId!=''">t.manager_id =#{managerId},</if>
+			<if test="roleIdsStr!=null and roleIdsStr!=''">t.role_ids =#{roleIdsStr},</if>
+		</set>
+		WHERE
+			t.id = #{id}
+ 	</update>
  </mapper>

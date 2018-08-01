@@ -37,8 +37,18 @@
 			      </c:forEach>	
 			    </div>
 			  </div>
+			  <div class="layui-form-item">
+				<label class="layui-form-label wid150">上级领导</label>
+				<div class="layui-input-inline">
+					<select id="managerId" name="managerId" class="valid">
+					<c:forEach items="${users}" var="user">
+						<option value="${user.id}">${user.username}</option>
+					</c:forEach>	
+					</select>
+				</div>
+			</div>
 			<div class="layui-form-item div-center">
-				<button class="layui-btn wid150" lay-filter="save" lay-submit="">
+				<button class="layui-btn" lay-filter="save" lay-submit="">
 					保存</button>
 			</div>
 		</form>
