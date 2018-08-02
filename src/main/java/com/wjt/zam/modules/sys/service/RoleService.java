@@ -11,7 +11,7 @@ import com.wjt.zam.modules.sys.model.Role;
  * @author: wangjintao
  * @date: 2018年6月24日 上午11:26:13
  */
-public interface RoleService extends BaseService<Role, String>{
+public interface RoleService extends BaseService<Role, Long>{
 
 	/**
 	 * 根据根据角色编号获取角色列表
@@ -25,4 +25,5 @@ public interface RoleService extends BaseService<Role, String>{
 	 * @return
 	 */
 	Set<String> findPermissions(List<String> roleIdsList);
+
 }

@@ -27,6 +27,26 @@ public class Resource extends PageInfo<Resource> {
 	private String available; // 是否有效
 	private String availableName;// 是否有效名称
 	private List<Resource> secondResources;// 二级资源菜单
+	
+	/**ztree用字段*/
+    private String pId;
+    private boolean checked;
+    
+	public boolean isChecked() {
+		return checked;
+	}
+
+	public void setChecked(boolean checked) {
+		this.checked = checked;
+	}
+
+	public String getpId() {
+		return pId;
+	}
+
+	public void setpId(String pId) {
+		this.pId = pId;
+	}
 
 	public String getAvailableName() {
 		return availableName;
@@ -146,9 +166,8 @@ public class Resource extends PageInfo<Resource> {
 
 	@Override
 	public String toString() {
-		return "Resource{" + "id=" + id + ", name='" + name + '\'' + ", type="
-				+ type + ", permission='" + permission + '\'' + ", parentId="
-				+ parentId + ", parentIds='" + parentIds + '\''
-				+ ", available=" + available + '}';
+		return "Resource{" + "id=" + id + ", name='" + name + '\'' + ", type=" + type + ", permission='" + permission
+				+ '\'' + ", parentId=" + parentId + ", parentIds='" + parentIds + '\'' + ", available=" + available
+				+ '}';
 	}
 }

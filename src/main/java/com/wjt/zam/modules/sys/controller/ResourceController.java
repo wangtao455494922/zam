@@ -139,5 +139,15 @@ public class ResourceController extends BaseController<Resource>{
 			return renderError(Constant.DELETE_ERROR);
 		}
 	}
+	
+	/**  
+	 * 获取资源为ztree
+	 */
+	@PostMapping("/getResources4Ztree")
+	@ResponseBody
+	public List<Resource> getResources4Ztree(String id){
+		List<Resource> resources= resourceService.getResources4Ztree(id);
+		return resources;
+	}
 
 }

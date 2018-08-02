@@ -29,5 +29,72 @@
 			<include refid="commonFields"/>
 		from sys_role
  	</select>	
- 
+ 	
+ 	<!-- 根据条件查询 -->
+ 	<select id="findList" parameterType="Role" resultType="Role">
+ 		SELECT
+			ro.id,
+			ro.role,
+			ro.description,
+			GROUP_CONCAT(re. NAME) resourceIdsStr,
+			CASE ro.available
+		WHEN 1 THEN
+			'有效'
+		ELSE
+			'无效'
+		END AS available
+		FROM
+			sys_role ro
+		LEFT JOIN sys_resource re ON FIND_IN_SET(re.id, ro.resource_ids)
+		<where>
+			<if test="role!=null and role!=''">ro.role like CONCAT("%",#{role},"%")</if>
+		</where>
+		GROUP BY
+			ro.id,
+			ro.role,
+			ro.description,
+			available
+ 	</select>
+ 	
+ 	<!--根据id查询  -->
+ 	<select id="findById" parameterType="long" resultType="Role">
+ 		select
+ 		 <include refid="commonFields"/>
+ 		from
+ 			 sys_role	
+ 		where id = #{id} 
+ 	</select>
+ 	<!-- 新增 -->
+	<insert id="insert" parameterType="Role">
+		insert into sys_role (role, description,available) values (#{role},#{description},1)
+	</insert>
+	
+	<!-- 更新 -->
+	<update id="update" parameterType="Role">
+		update sys_role
+		<set>
+			<if test="role!=null and role!=''">role = #{role},</if>
+			<if test="description!=null and description!=''">description = #{description},</if>
+			<if test="resourceIdsStr!=null and resourceIdsStr!=''">resource_ids = #{resourceIdsStr},</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="arrayList">
+ 		DELETE
+		FROM
+			sys_role
+		WHERE
+			id in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">  
+	     	#{item}  
+	    </foreach> 
+ 	</delete>
+ 	
+ 	<!--根据id删除 -->
+	<delete id="delete" parameterType="Role">
+		delete from sys_role
+		where id = #{id}
+	</delete>
  </mapper>

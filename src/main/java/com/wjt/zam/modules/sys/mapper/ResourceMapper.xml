@@ -165,6 +165,7 @@
 			id = #{id}
  	</delete>
  	
+ 	<!-- 批量删除资源信息 -->
  	<delete id="batchDelete" parameterType="arrayList">
  		DELETE
 		FROM
@@ -175,5 +176,27 @@
 	     	#{item}  
 	    </foreach> 
  	</delete>
+ 	
+ 	<!-- 获取ztree展示资源 -->
+ 	<select id="getResources4Ztree"  parameterType="string"  resultType="Resource">
+ 		SELECT
+			t.id,
+			t. NAME,
+			t.parent_id pId,
+			IF(tt.resId is not NULL,TRUE,FALSE) checked
+		FROM
+			sys_resource t
+		LEFT JOIN (
+			SELECT
+				re.id resId
+			FROM
+				sys_role ro
+			LEFT JOIN sys_resource re ON FIND_IN_SET(re.id, ro.resource_ids)
+			WHERE
+				ro.id = #{id}
+		) tt ON t.id = tt.resId
+		WHERE
+			t.parent_id != 0
+ 	</select>
  	
  </mapper>

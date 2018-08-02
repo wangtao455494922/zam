@@ -37,4 +37,10 @@ public interface ResourceService extends BaseService<Resource, String>{
 	 */
 	List<Resource> getResources(Resource resource);
 
+	/**  
+	 * 获取ztree展示资源
+	 * @param id 角色id
+	 */
+	List<Resource> getResources4Ztree(String id);
+
 }

@@ -5,7 +5,7 @@ import java.util.List;
 import com.wjt.zam.common.base.BaseMapper;
 import com.wjt.zam.modules.sys.model.Role;
 
-public interface RoleMapper extends BaseMapper<Role, String>{
+public interface RoleMapper extends BaseMapper<Role, Long>{
 
 	/**  
 	 * 根据角色roleIds获取角色列表 

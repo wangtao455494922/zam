@@ -19,7 +19,7 @@ import java.util.Set;
 
 @Service(value="roleServiceImpl")
 @Transactional
-public class RoleServiceImpl extends BaseServiceImpl<Role, String>implements RoleService {
+public class RoleServiceImpl extends BaseServiceImpl<Role, Long>implements RoleService {
 	
     @Autowired
     private ResourceService resourceService;
@@ -27,7 +27,7 @@ public class RoleServiceImpl extends BaseServiceImpl<Role, String>implements Rol
     private RoleMapper roleMapper;
     
     @Override
-	public BaseMapper<Role, String> getBaseMapper() {
+	public BaseMapper<Role, Long> getBaseMapper() {
 		return roleMapper;
 	}
     

@@ -12,7 +12,7 @@ import com.github.pagehelper.PageInfo;
 @Alias(value="Role")
 public class Role extends PageInfo<Role>{
 	private static final long serialVersionUID = -4971388004142008096L;
-	private String id; // 编号
+	private Long id; // 编号
 	private String role; // 角色标识 程序中判断使用,如"admin"
 	private String description; // 角色描述,UI界面显示使用
 	private String resourceIdsStr; // 拥有的资源
@@ -30,11 +30,11 @@ public class Role extends PageInfo<Role>{
 		return available;
 	}
 
-	public String getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

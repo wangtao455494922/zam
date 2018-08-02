@@ -78,4 +78,9 @@ public class ResourceServiceImpl extends BaseServiceImpl<Resource, String> imple
 		return resourceMapper.getResources(resource);
 	}
 
+	@Override
+	public List<Resource> getResources4Ztree(String id) {
+		return resourceMapper.getResources4Ztree(id);
+	}
+
 }

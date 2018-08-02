@@ -26,5 +26,9 @@ public interface ResourceMapper  extends BaseMapper<Resource, String>{
 	 * 获取资源信息  
 	 */
 	List<Resource> getResources(Resource resource);
-
+	/**  
+	 * 获取ztree展示资源
+	 * @param id 角色id
+	 */
+	List<Resource> getResources4Ztree(String id);
 }
