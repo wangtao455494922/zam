@@ -29,9 +29,6 @@
 						<a id="loginOut">退出</a>
 					</dd>
 				</dl></li>
-			<!-- <li class="layui-nav-item to-index">
-				<a href="/">前台首页</a>
-			</li> -->
 		</ul>
 
 	</div>
@@ -42,7 +39,7 @@
 		<div id="side-nav">
 			<ul id="nav">
 				<c:forEach items="${menus}" var="menu">
-					<li><a href="javascript:;"> <i class="iconfont">&#xe723;</i>
+					<li><a href="javascript:;"> <i class="iconfont">${menu.icon}</i>
 							<cite>${menu.name}</cite> <i class="iconfont nav_right">&#xe697;</i></a>
 						<ul class="sub-menu">
 							<c:forEach items="${menu.secondResources}" var="secondMenus">
@@ -52,14 +49,6 @@
 							</c:forEach>
 						</ul></li>
 				</c:forEach>
-				<li><a href="javascript:;"> <i class="iconfont">&#xe6b4;</i>
-						<cite>图标字体</cite> <i class="iconfont nav_right">&#xe697;</i>
-				</a>
-					<ul class="sub-menu">
-						<li><a _href="unicode.html"> <i class="iconfont">&#xe6a7;</i>
-								<cite>图标对应字体</cite>
-						</a></li>
-					</ul></li>
 			</ul>
 		</div>
 	</div>

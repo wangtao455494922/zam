@@ -28,7 +28,7 @@
 		</div>
 			<div class="layui-btn-container">
 			  <button class="layui-btn" data-type="deleteAll">批量删除</button>
-			  <button class="layui-btn" onclick="x_admin_show('添加资源','${path}/resourceAdd',600,400)">添加</button>
+			  <button class="layui-btn" onclick="x_admin_show('添加资源','${path}/resourceAdd')">添加</button>
 			</div>
 		<table id="resourceTab" class="layui-table" lay-filter="resourceTable"></table>
 		<script type="text/html" id="barDemo">
@@ -51,6 +51,13 @@
 			      ,{field:'name',width:138,title: '资源名称'}
 			      ,{field:'typeName', sort: true,title: '资源类型'}
 			      ,{field:'parentResourceName',title: '上级资源'}
+			      ,{field:'icon',title: '图标',templet:function(d){
+			    	 if (d.icon!=null) {
+			    		  return '<i class="icon iconfont">'+ d.icon +'</i>'
+					} else {
+						 return '无'	
+					}
+			      }}
 			      ,{field:'permission',title: '资源权限'}
 			      ,{field:'availableName', sort: true,title: '权限'}
 			      ,{fixed: 'right', align:'center', sort: true,toolbar: '#barDemo',title: '操作'}
@@ -63,7 +70,7 @@
 			  table.on('tool(resourceTable)', function(obj){
 			    var data = obj.data;
 			    if(obj.event === 'edit'){
-			    	x_admin_show('修改资源','${path}/resourceToUpdate?id='+data.id,600,400);
+			    	x_admin_show('修改资源','${path}/resourceToUpdate?id='+data.id);
 			    } else if(obj.event === 'delete'){
 				      layer.confirm('真的删除行么', function(index){
 				    	  $.ajax({

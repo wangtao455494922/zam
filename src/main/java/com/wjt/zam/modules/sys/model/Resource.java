@@ -26,12 +26,21 @@ public class Resource extends PageInfo<Resource> {
 	private String parentIds; // 父编号列表
 	private String available; // 是否有效
 	private String availableName;// 是否有效名称
+	private String icon;//图标
 	private List<Resource> secondResources;// 二级资源菜单
 	
 	/**ztree用字段*/
     private String pId;
     private boolean checked;
     
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+
 	public boolean isChecked() {
 		return checked;
 	}

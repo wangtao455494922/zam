@@ -37,7 +37,7 @@
 				</div>
 			</div>
 			<div class="layui-form-item">
-				<label class="layui-form-label wid150">URL</label>
+				<label class="layui-form-label wid150">资源URL</label>
 				<div class="layui-input-inline">
 					<input type="text" id="url" name="url" 
 						lay-verify="" autocomplete="off" class="layui-input">
@@ -57,7 +57,7 @@
 	             </div>
 			</div>
 			<div class="layui-form-item">
-				<label class="layui-form-label wid150">父类资源名称</label>
+				<label class="layui-form-label wid150">资源父类</label>
 				<div class="layui-input-inline">
 					<select id="shipping" name="parentId" class="valid">
 					<c:forEach items="${menus}" var="menu">
@@ -65,6 +65,16 @@
 					</c:forEach>	
 					</select>
 				</div>
+			</div>
+			<div class="layui-form-item">
+				<label class="layui-form-label wid150">资源图标</label>
+				<div class="layui-input-inline">
+					<input type="icon" id="permission" name="icon" 
+						lay-verify="required" autocomplete="off" class="layui-input">
+				</div>
+				<div class="layui-form-mid layui-word-aux">
+	                  <span class="x-red">*</span>具体参照  系统管理→图标管理
+	             </div>
 			</div>
 			<div class="layui-form-item div-center">
 				<button class="layui-btn wid150" lay-filter="add" lay-submit="">
