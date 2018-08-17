@@ -57,8 +57,8 @@ Zam目前包括以下四大模块，系统管理（SYS）模块、
 ![部署管理](https://github.com/wangtao455494922/zam/blob/master/readmeImages/7.png)
 ![任务管理](https://github.com/wangtao455494922/zam/blob/master/readmeImages/8.png)
 ![请假管理](https://github.com/wangtao455494922/zam/blob/master/readmeImages/9.png)
-![会话管理](https://github.com/wangtao455494922/zam/blob/master/src/main/webapp/images/readme/10.png)
-![发送模板](https://github.com/wangtao455494922/zam/blob/master/src/main/webapp/images/readme/11.png)
+![会话管理](https://github.com/wangtao455494922/zam/blob/master/readmeImages/10.png)
+![发送模板](https://github.com/wangtao455494922/zam/blob/master/readmeImages/11.png)
 
 
 
