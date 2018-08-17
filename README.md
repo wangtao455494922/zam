@@ -48,7 +48,7 @@ Zam目前包括以下四大模块，系统管理（SYS）模块、
 
 ## 截图
 
-![登录](https://github.com/wangtao455494922/zam/blob/master/src/main/webapp/images/readme/1.png)
+![登录](https://github.com/wangtao455494922/zam/blob/master/readmeImages/1.png)
 ![首页](https://github.com/wangtao455494922/zam/blob/master/readmeImages/2.png)
 ![用户管理](https://github.com/wangtao455494922/zam/blob/master/src/main/webapp/images/readme/3.png)
 ![资源管理](https://github.com/wangtao455494922/zam/blob/master/src/main/webapp/images/readme/4.png)
