@@ -25,6 +25,7 @@
             <list>
                 <value>classpath:jdbc.properties</value>
                 <value>classpath:constant.properties</value>
+                <value>classpath:activemq.properties</value>
             </list>
         </property>
         <property name="fileEncoding">
@@ -90,6 +91,9 @@
     <import resource="classpath:applicationContext-cache.xml"/>
     <import resource="classpath:applicationContext-shiro.xml"/>
     
-    <!-- activiti相关配置 -->
+    <!-- activiti相关配置(工作流) -->
     <import resource="classpath:applicationContext-activiti.xml"/>
+    
+    <!-- activeMq相关配置(根据需求切换queue或topic,不可同时启用) -->
+    <import resource="classpath:applicationContext-amq-queue.xml"/>
 </beans>

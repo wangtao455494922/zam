@@ -42,7 +42,6 @@ public class TaskController extends BaseController<com.wjt.zam.modules.act.model
 	public String index(Model model){
 		return "modules/task/index";
 	}
-	
 	/**  
 	 * table数据初始化
 	 * @throws IllegalAccessException 

@@ -121,6 +121,14 @@ public class Constant {
 	 * shiro 强制退出
 	 */
 	public static final String FORCE_LOGOUT_SUCCESS = getProperty("force.logout.success");
+	/**
+	 * 公共  操作成功
+	 */
+	public static final String COMMON_SUCCESS = getProperty("common.success");
+	/**
+	 * 公共  操作失败
+	 */
+	public static final String COMMON_ERROR = getProperty("common.error");
 
 	public static Map<String, String> getResourceType() {
 		Map<String, String> map = new HashMap<String, String>();
