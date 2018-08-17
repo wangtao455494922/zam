@@ -32,23 +32,23 @@ Zam目前包括以下四大模块，系统管理（SYS）模块、
 * 缓存框架：Ehcache 1.3.2
 * 工具类：Apache Commons、Jackson 2.2、POI 3.9等
 
-...
+
 
 2、前端
 
 * JS框架：jQuery 1.9、Layui 2.3.0。
 * CSS框架：Layui 2.3.0、[x-admin](http://x.xuebingsi.com/ "x-admin")。
-...
+
 
 3、中间件
 
 *  消息队列：activeMQ 5.10.1
 
-...
+
 
 ## 截图
 
-....
+
 
 
 
