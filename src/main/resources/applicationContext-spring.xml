@@ -70,7 +70,7 @@
     
     <!-- aop切点与通知 -->
     <aop:config>
-        <aop:pointcut id="appService" expression="execution(* com.wjt.zam.modlules..service..*Service*.*(..))"/>
+        <aop:pointcut id="appService" expression="execution(* com.wjt.zam.modlules.*.service..*.*(..))"/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="appService"/>
     </aop:config>
     
