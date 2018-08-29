@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amq="http://activemq.apache.org/schema/core"
+xmlns:jms="http://www.springframework.org/schema/jms" xmlns:context="http://www.springframework.org/schema/context"
+xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/jms 
+        http://www.springframework.org/schema/jms/spring-jms.xsd
+        http://activemq.apache.org/schema/core 
+        http://activemq.apache.org/schema/core/activemq-core.xsd">
+		
+		<!-- 第三方ActionMQ工厂  ConnectionFactory-->
+    	<bean id="activeMQConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+    		<property name="brokerURL" value="${activemq.brokerURL}"/>
+    		<property name="userName" value="${activemq.userName}"/>
+    		<property name="password" value="${activemq.password}"/>
+    	</bean>   
+    	
+    	<!-- Spring真正的用于管理ActiveMQ的ConnectionFactory的ConnectionFactory -->
+    	<bean id="cachingConnectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
+    		<property name="targetConnectionFactory" ref="activeMQConnectionFactory"/>
+    		<property name="sessionCacheSize" value="${activemq.sessionCacheSize}"/>
+    		<!--消费者标示id -->  
+       		<property name="clientId" value="clientId_001" />  
+    	</bean>	
+    	
+    	<!-- 木的地(Topic) -->
+    	<bean id="msgTopic" class="org.apache.activemq.command.ActiveMQTopic">
+    		<constructor-arg>
+    			<value>${activemq.topicName}</value>
+    		</constructor-arg>
+    	</bean>
+    	
+    	<!-- 配置消费者 -->
+    	<bean id="zamMessageListener" class="com.wjt.zam.modules.amq.listener.ZamMessageListener"/>
+    	
+    	<!-- Spring将Connection、ActiveMQQueue、自定义监听注入jms模板,当使用模板管理消息时,监听即相当于消费者,业务也都在监听类中处理 -->
+    	<bean class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+    		<property name="destination" ref="msgTopic"/>
+    		<property name="messageListener" ref="zamMessageListener"/>
+    		<property name="connectionFactory" ref="cachingConnectionFactory"/>
+    		<!-- 发布订阅模式 -->  
+	        <property name="pubSubDomain" value="true" />  
+	        <!-- 消息持久化值设置为true -->  
+	        <property name="subscriptionDurable" value="true" />  
+	        <!--消息接收超时 -->  
+	        <property name="receiveTimeout" value="${activemq.receiveTimeout}" />  
+	        <!-- 接收者ID -->  
+	        <property name="clientId" value="clientId_001" />  
+	        <property name="durableSubscriptionName" value="clientId_001" />  
+    	</bean>
+</beans>

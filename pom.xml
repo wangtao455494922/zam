@@ -19,6 +19,15 @@
 		<commons.fileupload.version>1.3.1</commons.fileupload.version>
 		<commons.io.version>2.2</commons.io.version>
 		<activemq.all.version>5.10.1</activemq.all.version>
+		<solj.solj.version>7.4.0</solj.solj.version>
+		<solj.math3.version>3.6.1</solj.math3.version>
+		<solj.httpclient.version>4.5.3</solj.httpclient.version>
+		<solj.httpcore.version>4.4.6</solj.httpcore.version>
+		<solj.mime.version>4.5.3</solj.mime.version>
+		<solj.noggit.version>0.8</solj.noggit.version>
+		<solj.stax2.version>3.1.4</solj.stax2.version>
+		<solj.asl.version>4.4.1</solj.asl.version>
+		<solj.zookeeper.version>3.4.11</solj.zookeeper.version>
 	</properties>
 
 	<dependencies>
@@ -228,6 +237,53 @@
 		  <groupId>org.apache.activemq</groupId>
 		  <artifactId>activemq-all</artifactId>
 		  <version>${activemq.all.version}</version>
+		</dependency>
+		
+		<!-- solrj -->
+		<dependency>
+		  <groupId>org.apache.solr</groupId>
+		  <artifactId>solr-solrj</artifactId>
+		  <version>${solj.solj.version}</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.apache.commons</groupId>
+		  <artifactId>commons-math3</artifactId>
+		  <version>${solj.math3.version}</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.apache.httpcomponents</groupId>
+		  <artifactId>httpclient</artifactId>
+		  <version>${solj.httpclient.version}</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.apache.httpcomponents</groupId>
+		  <artifactId>httpcore</artifactId>
+		  <version>${solj.httpcore.version}</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.apache.httpcomponents</groupId>
+		  <artifactId>httpmime</artifactId>
+		  <version>${solj.mime.version}</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.noggit</groupId>
+		  <artifactId>noggit</artifactId>
+		  <version>${solj.noggit.version}</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.codehaus.woodstox</groupId>
+		  <artifactId>stax2-api</artifactId>
+		  <version>${solj.stax2.version}</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.codehaus.woodstox</groupId>
+		  <artifactId>woodstox-core-asl</artifactId>
+		  <version>${solj.asl.version}</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.apache.zookeeper</groupId>
+		  <artifactId>zookeeper</artifactId>
+		  <version>${solj.zookeeper.version}</version>
 		</dependency>
 	</dependencies>
 
