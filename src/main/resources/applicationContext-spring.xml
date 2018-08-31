@@ -95,7 +95,7 @@
     <!-- activeMq相关配置(根据需求切换queue或topic,不可同时启用)
     	注意:当加载topic消费者生产者需只是ProducerController.java中相关template的相关内容,否则项目启动会报错
      -->
-   <!--  <import resource="classpath:amq/applicationContext-amq-queue.xml"/> --> <!-- Queue生产者/消费者,一体未拆分 -->
+    <import resource="classpath:amq/applicationContext-amq-queue.xml"/> <!-- Queue生产者/消费者,一体未拆分 -->
     <!-- <import resource="classpath:amq/applicationContext-amq-topic-producer.xml"/> --><!-- topic生产者 -->
     <!-- <import resource="classpath:amq/applicationContext-amq-topic-customer2.xml"/> --><!-- topic消费者1 -->
    	<!-- <import resource="classpath:amq/applicationContext-amq-topic-customer2.xml"/> --><!-- topic消费者2 -->
