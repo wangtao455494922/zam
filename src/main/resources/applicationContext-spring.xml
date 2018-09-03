@@ -4,17 +4,23 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:task="http://www.springframework.org/schema/task"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/aop
        http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/task 
+       http://www.springframework.org/schema/task/spring-task-3.2.xsd
        http://www.springframework.org/schema/tx
        http://www.springframework.org/schema/tx/spring-tx.xsd">
     
-    <!-- 开启自动注解 -->
+    <!-- 开启spring上下文自动注解 -->
     <context:annotation-config/>
+    
+    <!-- 开启spring的task自动注解 -->
+    <task:annotation-driven/>
     
     <!--扫描所有组件,除 @Controller其他注解组件 --> 
     <context:component-scan base-package="com.wjt.zam"/>

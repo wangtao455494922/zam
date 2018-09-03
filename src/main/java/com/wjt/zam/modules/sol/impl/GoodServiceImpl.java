@@ -11,6 +11,7 @@ import org.apache.solr.client.solrj.impl.HttpSolrClient;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
+import org.apache.solr.common.params.CommonParams;
 import org.apache.solr.common.params.ModifiableSolrParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,28 +33,28 @@ public class GoodServiceImpl implements IGoodService {
 		ModifiableSolrParams params = new ModifiableSolrParams();
 		//查询所有的field
 		if (StringUtils.isBlank(paramGood.getName())) {
-			params.set("q", "*:*");
+			params.set(CommonParams.Q, "*:*");
 		}else{
-			params.set("q", "good_name:"+paramGood.getName());
+			params.set(CommonParams.Q, "good_name:"+paramGood.getName());
 		}
 		//精确查询(价格)
 		String price = paramGood.getPrice();
 		if (StringUtils.isNotBlank(price)) {
 			String[] priceArray = price.split("-");
-			params.set("fq", "good_price:["+priceArray[0]+" TO "+priceArray[1]+"]");
+			params.set(CommonParams.FQ, "good_price:["+priceArray[0]+" TO "+priceArray[1]+"]");
 		}
 		//精确查询(种类名称)
 		if (StringUtils.isNotBlank(paramGood.getCatalogName())) {
-			params.set("fq", "good_catalog_name:"+paramGood.getCatalogName());
+			params.set(CommonParams.FQ, "good_catalog_name:"+paramGood.getCatalogName());
 		}
 		//排序
 		if ("1".equals(paramGood.getSort())) {
-			params.set("sort", "good_price ASC");
+			params.set(CommonParams.SORT, "good_price ASC");
 		}
 		//页数
-		params.set("start", paramGood.getStart());
+		params.set(CommonParams.START, paramGood.getStart());
 		//页码
-		params.set("rows", paramGood.getRows());
+		params.set(CommonParams.ROWS, paramGood.getRows());
 		
 		//设置高亮
 		params.set("hl", true);
