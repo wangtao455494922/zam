@@ -43,6 +43,7 @@ Zam目前包括以下四大模块，系统管理（SYS）模块、
 3、中间件
 
 *  消息队列：activeMQ 5.10.1
+*  全文搜索:solr 7.4.0
 
 
 
@@ -59,6 +60,7 @@ Zam目前包括以下四大模块，系统管理（SYS）模块、
 ![请假管理](https://github.com/wangtao455494922/zam/blob/master/readmeImages/9.png)
 ![会话管理](https://github.com/wangtao455494922/zam/blob/master/readmeImages/10.png)
 ![发送模板](https://github.com/wangtao455494922/zam/blob/master/readmeImages/11.png)
+![全文搜索](https://github.com/wangtao455494922/zam/blob/master/readmeImages/12.png)
 
 
 
